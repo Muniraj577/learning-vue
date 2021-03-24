@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Rubik:wght@300;400&display=swap');
+
+body {
+    font-size: 0.96rem;
+    /*font-family: 'Rubik', sans-serif;*/
+}
+.blue{
+    color: blue;
+}
+.red{
+    color: red;
+}
+.imageSize{
+    width: 25px;
+    height: 25px;
+}
+
+.imgSize{
+    width: 50px;
+    height: 50px;
+}
+.card-header{
+    padding: 0 !important;
+}
+.card-body h2{
+    color: rgb(88, 81, 81);
+}
+.req {
+    color: red;
+}
+.primary{
+    background-color: #336ea0;
+}
+.card-title{
+    color: #000;
+}
+.content-header {
+    padding: 8px 0 !important;
+}
+.iCheck {
+    font-size: 0.85rem !important;
+}
+
+
+.mainclass {
+    font-weight: bold;
+}
+
+.subclass {
+    font-size: 14px;
+}
+
+.action_button{
+    padding: .1rem .5rem !important;
+    border-radius: 0;
+    background-color: #336ea0;
+    border-color: #336ea0;
+    color: #fff;
+    box-shadow: none;
+    font-size: 0.89rem !important;
+}
+
+.action_button:hover{
+    color: #fff !important;
+}
+
+.action_button.dropdown-toggle::after {
+    vertical-align: .155em !important;
+}
+.action_dropdown .dropdown-item{
+    font-size: 0.95rem !important;
+}
+.form-control {
+    height: 2.3rem;
+    border-radius: 0;
+    font-size: 0.9rem;
+    padding: .275rem .75rem .375rem .75rem;
+    /*line-height: 1;*/
+}
+
+.select2-container .select2-selection--single {
+    height: 37px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    margin-top: 2px;
+}
+
+.select2-container--default .select2-selection--single {
+    border-radius: 0;
+}
+
+.select2-search--dropdown .select2-search__field {
+    border-radius: 0;
+}
+
+.btn {
+    padding: .2rem .5rem;
+    border-radius: 0;
+}
+
+.nav-sidebar .nav-header {
+    font-size: 1.1rem !important;
+}
+
+.infos a {
+    color: #212529;
+}
+
+.content-header {
+    padding: 15px 0;
+}
+
+.info-box {
+    border-radius: 0;
+}
+
+.card {
+    border-radius: 0;
+}
+
+.create-card > .card-body {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+table.dataTable td, table.dataTable th {
+    font-size: 0.9rem;
+}
+
+.table td, .table th {
+    /* text-align: center !important; */
+    padding: .5rem !important;
+}
+
+.nav-pills .nav-link {
+    border-radius: 0 !important;
+}
+
+.navbar-white {
+    background-color: #336ea0 !important;
+}
+
+.nav-sidebar .nav-link p {
+    font-size: 0.9rem !important;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #fff !important;
+}
+
+.navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link:focus {
+    color: #fff !important;
+}
+
+.navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link:focus {
+    color: #fff !important;
+}
+
+[class*=sidebar-dark-] {
+    background-color: #336ea0 !important;
+}
+
+[class*=sidebar-dark] .brand-link {
+    border-bottom: 1px solid #336ea0 !important;
+    background-color: #fff !important;
+    color: #336ea0 !important;
+    font-weight: bolder !important;
+    font-size: 19px !important;
+}
+
+[class*=sidebar-dark] .user-panel {
+    border-bottom: 1px solid #fff !important;
+}
+
+[class*=sidebar-dark-] .user-panel a:hover {
+    color: #fff !important;
+}
+
+[class*=sidebar-dark-] .sidebar a {
+    color: #fff !important;
+}
+
+[class*=sidebar-dark-] .sidebar a:hover {
+    color: #241e20 !important;
+}
+
+[class*=sidebar-dark-] .nav-treeview > .nav-item > .nav-link {
+    color: #fff !important;
+    padding: .5rem 2.5rem !important;
+}
+
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active, .sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active {
+    background-color: #241e20 !important;
+    color: #fff !important;
+}
+
+
+[class*=sidebar-dark-] .nav-sidebar > .nav-item.menu-open > .nav-link, [class*=sidebar-dark-] .nav-sidebar > .nav-item:hover > .nav-link, [class*=sidebar-dark-] .nav-sidebar > .nav-item > .nav-link:focus {
+    background-color: #241e20 !important;
+    color: #fff !important;
+}
+
+[class*=sidebar-dark-] .nav-treeview > .nav-item > .nav-link:focus, [class*=sidebar-dark-] .nav-treeview > .nav-item > .nav-link:hover {
+    background-color: #241e20 !important;
+    color: #fff !important;
+}
+
+[class*=sidebar-dark-] .nav-treeview > .nav-item > .nav-link.active, [class*=sidebar-dark-] .nav-treeview > .nav-item > .nav-link.active:focus, [class*=sidebar-dark-] .nav-treeview > .nav-item > .nav-link.active:hover {
+    background-color: #241e20 !important;
+    color: #fff !important;
+}
+
+[class*=sidebar-dark-] .sidebar a:hover {
+    color: #fff !important;
+}
+
+.btn-primary {
+    background-color: #336ea0 !important;
+    border-color: #336ea0 !important;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
+    background-color: #336ea0 !important;
+    border-color: #336ea0 !important;
+}
+
+.btn-primary:hover {
+    background-color: #336ea0 !important;
+    border-color: #336ea0 !important;
+}
+
+.btn-primary {
+    background-color: #336ea0 !important;
+    border-color: #336ea0 !important;
+}
+
+.main-footer {
+    background-color: #fff !important;
+    color: #271c20 !important;
+}
+
+.main-footer a {
+    color: #336ea0 !important;
+}
+
+.main-footer a:hover {
+    color: #067b59 !important;
+    text-decoration: none !important;
+}
