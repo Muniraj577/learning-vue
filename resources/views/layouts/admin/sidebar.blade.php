@@ -46,6 +46,12 @@ $saleNav = Request::is('admin/sale*');
                         <p>Profile</p>
                     </router-link>
                 </li>
+                <li class="nav-item">
+                    <router-link :to="{name: 'category'}" class="nav-link">
+                        <i class="nav-icon fas fa-tachometer-alt iCheck"></i>
+                        <p>Category</p>
+                    </router-link>
+                </li>
                 {{-- @include('layouts.admin.sidebar.allnav') --}}
             </ul>
         </nav>

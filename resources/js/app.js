@@ -1,5 +1,9 @@
 import VueRouter from 'vue-router';
 import {routes} from './routes';
+// import {categoryRoute} from './routes/category';
+import VueAxios from 'vue-axios';
+import axios from 'axios';
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -8,14 +12,17 @@ import {routes} from './routes';
 
 require('./bootstrap');
 
+
 window.Vue = require('vue').default;
 
 Vue.use(VueRouter);
+Vue.use(VueAxios,axios);
 
 
 const router = new VueRouter({
     mode: 'history',
     routes,
+    
 });
 
 

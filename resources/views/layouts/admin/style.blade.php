@@ -20,9 +20,9 @@
 <!-- summernote -->
 <link rel="stylesheet" href="{{ asset('admin/plugins/summernote/summernote-bs4.min.css') }}">
 <!-- DataTables -->
-<link rel="stylesheet" href="{{ asset('admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ asset('admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ asset('admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}"> --}}
 <link rel="stylesheet" href="{{ asset('admin/plugins/select2/css/select2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('admin/css/style.css') }}">
@@ -30,7 +30,7 @@
 <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
 <link rel="stylesheet" href="{{ asset('css/nepali.datepicker.min.css') }}">
 <link rel="stylesheet" href="{{ asset('css/jquery-confirm.min.css') }}">
-<link rel="stylesheet" href="{{mix('css/app.css')}}">
+{{-- <link rel="stylesheet" href="{{mix('css/app.css')}}"> --}}
 <style>
     .toast-top-container {
         position: absolute;
