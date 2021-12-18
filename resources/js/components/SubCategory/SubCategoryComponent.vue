@@ -8,16 +8,16 @@
               <div class="card-header">
                 <div class="card-title float-right">
                   <router-link
-                    :to="{ name: 'createCategory' }"
+                    :to="{ name: 'createSubCategory' }"
                     class="btn btn-primary"
                   >
-                    <i class="fas fa-plus"></i> Add Category
+                    <i class="fas fa-plus"></i> Add SubCategory
                   </router-link>
                 </div>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table id="Category" class="table text-center">
+                  <table id="SubCategory" class="table text-center">
                     <thead>
                       <tr>
                         <th>S.N</th>
@@ -28,25 +28,27 @@
                     </thead>
                     <tbody>
                       <tr
-                        v-for="(category, i) in categories"
-                        :key="category.id"
+                        v-for="(subcategory, i) in subcategories"
+                        :key="subcategory.id"
                       >
                         <td>{{ i + 1 }}</td>
-                        <td>{{ category.name }}</td>
-                        <td>{{ category.status ? "Active" : "Inactive" }}</td>
+                        <td>{{ subcategory.name }}</td>
+                        <td>
+                          {{ subcategory.status ? "Active" : "Inactive" }}
+                        </td>
                         <td>
                           <div class="inline-flex">
                             <router-link
                               :to="{
-                                name: 'editCategory',
-                                params: { id: category.id },
+                                name: 'editSubCategory',
+                                params: { id: subcategory.id },
                               }"
                               class="btn btn-primary"
                               >Edit</router-link
                             >
                             <button
                               class="btn btn-danger"
-                              @click="deleteCategory(category.id)"
+                              @click="deleteCategory(subcategory.id)"
                             >
                               Delete
                             </button>
@@ -73,38 +75,37 @@ import "datatables.net-dt/css/jquery.dataTables.min.css";
 export default {
   data() {
     return {
-      categories: [],
+      subcategories: [],
     };
   },
 
   async created() {
     showLoader();
-    await axios
-      .get("/api/admin/category")
-      .then((response) => {
-        if (response.data.success) {
-          this.categories = response.data.categories;
-          this.myTable();
+    await axios.get("/api/admin/subcategory").then((response) => {
+      if (response.data.success) {
+        this.subcategories = response.data.subcategories;
+        this.myTable();
+        hideLoader();
+      } else {
+          toastr.error('Something went wrong');
           hideLoader();
-        } else {
-          hideLoader();
-        }
-      })
-      .catch((err) => {
+      }
+    }).catch((err) =>{
         toastr.error(err);
-      });
+        hideLoader();
+    });
   },
   methods: {
     myTable() {
       $(document).ready(function () {
-        $("#Category").DataTable();
+        $("#SubCategory").DataTable();
       });
     },
     async deleteCategory(id) {
       showLoader();
-      await axios.delete(`/api/admin/category/delete/${id}`).then((res) => {
+      await axios.delete(`/api/admin/subcategory/delete/${id}`).then((res) => {
         if (res.data.success) {
-          let i = this.categories.map((data) => data.id).indexOf(id);
+          let i = this.subcategories.map((data) => data.id).indexOf(id);
           this.categories.splice(i, 1);
           toastr.success(res.data.message);
         } else {

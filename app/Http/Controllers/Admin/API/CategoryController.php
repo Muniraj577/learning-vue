@@ -20,7 +20,7 @@ class CategoryController extends Controller
     {
         $categories = $this->categoryRepository->getCategories();
         // $categories = Category::latest()->get();
-        return response()->json($categories);
+        return response()->json(["success"=>true,"categories"=>$categories]);
     }
 
     public function store(Request $request)
@@ -65,5 +65,11 @@ class CategoryController extends Controller
     {
         $this->categoryRepository->delete($id);
         return response()->json(['success'=>true, 'message' => 'Category deleted']);
+    }
+
+    public function getAllCategories()
+    {
+        $categories = $this->categoryRepository->allCategories();
+        return response()->json($categories);
     }
 }

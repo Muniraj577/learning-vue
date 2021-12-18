@@ -8,13 +8,13 @@
               <div class="card-header">
                 <div class="card-title float-right">
                   <button class="btn btn-primary">
-                    <i class="fas fa-eye"></i> Categories
+                    <i class="fas fa-eye"></i> SubCategories
                   </button>
                 </div>
               </div>
               <div class="card-body">
                 <form
-                  @submit.prevent="addCategory"
+                  @submit.prevent="addSubCategory"
                   enctype="multipart/form-data"
                 >
                   <div class="col-md-6">
@@ -29,14 +29,39 @@
                               type="text"
                               name="name"
                               class="form-control"
-                              v-model="category.name"
+                              v-model="subcategory.name"
                               value=""
                               placeholder="Enter category name"
-                              id="cat"
+                              id=""
                             />
                             <span v-if="errors.name" :class="['text-danger']">{{
                               errors.name[0]
                             }}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <label for="categories">Select Categories</label>
+                          </div>
+                          <div class="col-md-8">
+                            <select
+                              v-model="subcategory.category_id"
+                              class="form-control"
+                              name="category_id"
+                              id="category_id"
+                            >
+                              <option value="" selected>Select Categories</option>
+                              <option
+                                v-for="category in categories"
+                                :key="category.id"
+                                :value="category.id"
+                              >
+                                {{ category.name }}
+                              </option>
+                            </select>
+                            <span v-if="errors.category_id" class="text-danger">{{ errors.category_id[0] }}</span>
                           </div>
                         </div>
                       </div>
@@ -49,7 +74,7 @@
                             <select
                               ref="statusSelect"
                               name="status"
-                              v-model="category.status"
+                              v-model="subcategory.status"
                               class="form-control"
                               id="status"
                             >
@@ -79,25 +104,39 @@
 export default {
   data() {
     return {
-      category: {},
+      categories: [],
+      subcategory: {},
       errors: [],
       success: true,
     };
   },
-  created() {
-    this.category.status = "1";
+  async created() {
+    this.subcategory.status = "1";
+    this.subcategory.category_id = '';
+    showLoader();
+    await this.axios
+      .get("/api/admin/get-categories")
+      .then((response) => {
+          this.categories = response.data;
+          hideLoader();
+      })
+      .catch((err) => {
+        toastr.error(err);
+        hideLoader();
+      });
+    hideLoader();
   },
   methods: {
-    async addCategory() {
+    async addSubCategory() {
       showLoader();
       await this.axios
-        .post("/api/admin/category/store", this.category)
+        .post("/api/admin/subcategory/store", this.subcategory)
         .then((response) => {
           if (response.data.success) {
-            this.$router.push({ name: "category" });
+            this.$router.push({ name: "subcategory" });
             toastr.success(response.data.message);
           } else {
-            this.errors = response.data.error;
+            this.errors = response.data.errors;
             this.success = false;
           }
           hideLoader();
@@ -107,15 +146,12 @@ export default {
           this.success = false;
         })
         .finally(() => (this.loading = false));
-
-      // .then((response) => this.$router.push({ name: "category" }))
-      // .finally(() => (this.loading = false));
     },
   },
   mounted: function () {
     var selectedStatus = this.$refs.statusSelect.children;
     if (selectedStatus.length) {
-      this.category.status = selectedStatus[0].value;
+      this.subcategory.status = selectedStatus[0].value;
     }
   },
 };

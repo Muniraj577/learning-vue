@@ -3,7 +3,11 @@ import Profile from './components/ProfileComponent.vue';
 import Category from './components/Category/CategoryComponent.vue';
 import AddCategory from './components/Category/AddCategoryComponent.vue';
 import EditCategory from './components/Category/EditCategoryComponent.vue';
+import SubCategory from './components/SubCategory/SubCategoryComponent.vue';
+import AddSubCategory from './components/SubCategory/AddSubCategoryComponent.vue';
+import EditSubCategory from './components/SubCategory/EditSubCategoryComponent.vue';
 // import {categoryRoute} from './routes/category.js';
+import subcategory from './routes/subcategory.js';
 
 export const routes = [
     {
@@ -38,6 +42,7 @@ export const routes = [
         component: EditCategory,
         meta: {title: 'Edit Category'},
     },
+    ...subcategory,
     
     
 ]

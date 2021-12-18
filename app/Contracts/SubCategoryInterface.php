@@ -1,11 +1,9 @@
-<?php 
+<?php
 
 namespace App\Contracts;
 
-interface CategoryInterface{
-
-    public function getCategories();
-    public function allCategories();
+interface SubCategoryInterface{
+    public function getSubCategories();
     public function store($data);
     public function find($id);
     public function update($data, $id);
