@@ -3,6 +3,7 @@ import { routes } from "./routes";
 // import {categoryRoute} from './routes/category';
 import VueAxios from "vue-axios";
 import axios from "axios";
+import Vue from "vue";
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -43,13 +44,20 @@ Vue.component(
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-const myMixin = {
-    created: function() {
-        this.showLoader();
-        this.hideLoader();
-    },
+Vue.mixin({
     methods: {
+        getCategories: function() {
+            this.axios
+                .get("/api/admin/get-categories")
+                .then(response => {
+                    this.categories = response.data;
+                    hideLoader();
+                })
+                .catch(err => {
+                    toastr.error(err);
+                    hideLoader();
+                });
+        },
         showLoader: function() {
             $("#overlay").css("display", "block");
             $(".loading").css("display", "block");
@@ -57,32 +65,42 @@ const myMixin = {
         hideLoader: function() {
             $("#overlay").css("display", "none");
             $(".loading").css("display", "none");
-        }
+        },
     }
-};
+});
+// const myMixin = {
+//     created: function() {
+//         this.showLoader();
+//         this.hideLoader();
+//     },
+//     methods: {
+//         showLoader: function() {
+//             $("#overlay").css("display", "block");
+//             $(".loading").css("display", "block");
+//         },
+//         hideLoader: function() {
+//             $("#overlay").css("display", "none");
+//             $(".loading").css("display", "none");
+//         },
+//         getCategories: function() {
+//             this.axios
+//                 .get("/api/admin/get-categories")
+//                 .then(response => {
+//                     this.categories = response.data;
+//                     hideLoader();
+//                 })
+//                 .catch(err => {
+//                     toastr.error(err);
+//                     hideLoader();
+//                 });
+//         }
+//     }
+// };
 
 const app = new Vue({
     el: "#app",
     router,
-    mixins: [myMixin],
-    methods: {
-        showLoader: function() {
-            $("#overlay").css("display", "block");
-            $(".loading").css("display", "block");
-        },
-        hideLoader: function() {
-            $("#overlay").css("display", "none");
-            $(".loading").css("display", "none");
-        }
-    },
-    beforeMount() {
-        this.showLoader();
-        this.hideLoader();
-    },
-    mounted: function() {
-        this.showLoader();
-        this.hideLoader();
-    }
+    // mixins: [myMixin],
 });
 
 router.beforeEach((to, from, next) => {
@@ -92,4 +110,3 @@ router.beforeEach((to, from, next) => {
         : defaultTitle;
     next();
 });
-

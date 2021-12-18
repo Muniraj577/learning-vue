@@ -104,18 +104,18 @@ export default {
     };
   },
   async created() {
-    showLoader();
+    this.showLoader();
     await axios
       .get(`/api/admin/subcategory/edit/${this.$route.params.id}`)
       .then((res) => {
         this.subcategory = res.data.subcategory;
-        hideLoader();
+        this.getCategories();
+        this.hideLoader();
       });
-    this.getCategories();
   },
   methods: {
     async updateSubCategory() {
-      showLoader();
+      this.showLoader();
       await axios
         .put(
           `/api/admin/subcategory/update/${this.$route.params.id}`,
@@ -129,19 +129,10 @@ export default {
             this.errors = response.data.error;
             this.success = false;
           }
-          hideLoader();
+          this.hideLoader();
         })
         .finally(() => (this.loading = false));
     },
-
-    getCategories(){
-        this.axios.get('/api/admin/get-categories')
-        .then((response) => {
-            this.categories = response.data;
-        }).catch((err) => {
-            toastr.error(err);
-        });
-    }
   },
 };
 </script>

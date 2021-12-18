@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     async addCategory() {
-      showLoader();
+      this.showLoader();
       await this.axios
         .post("/api/admin/category/store", this.category)
         .then((response) => {
@@ -100,7 +100,7 @@ export default {
             this.errors = response.data.error;
             this.success = false;
           }
-          hideLoader();
+          this.hideLoader();
         })
         .catch((err) => {
           toastr.error(err);

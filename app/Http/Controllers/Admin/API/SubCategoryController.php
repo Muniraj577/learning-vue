@@ -64,7 +64,26 @@ class SubCategoryController extends Controller
 
     public function update(Request $request, $id)
     {
-        
+        $validator = Validator::make($request->all(),[
+            "name" => ["required", "unique:sub_categories,name,".$id],
+            "category_id" => ["required"],
+        ]);
+
+        if($validator->fails()){
+            return response()->json(["errors" => $validator->errors()]);
+        }
+
+        if($validator->passes()){
+            try{
+                DB::beginTransaction();
+                $subcategory = $this->subcategoryRepository->update($request, $id);
+                DB::commit();
+                return response()->json(["success"=>true, "message"=>"Subcategory updated successfully"]);
+            } catch(\Exception $e){
+                DB::rollBack();
+                return response()->json(["db_error" => $e->getMessage()]);
+            }
+        }
     }
 
     public function destroy($id)

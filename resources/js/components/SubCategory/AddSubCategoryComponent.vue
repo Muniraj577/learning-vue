@@ -113,22 +113,23 @@ export default {
   async created() {
     this.subcategory.status = "1";
     this.subcategory.category_id = '';
-    showLoader();
-    await this.axios
-      .get("/api/admin/get-categories")
-      .then((response) => {
-          this.categories = response.data;
-          hideLoader();
-      })
-      .catch((err) => {
-        toastr.error(err);
-        hideLoader();
-      });
-    hideLoader();
+    this.showLoader();
+    this.getCategories();
+    // await this.axios
+    //   .get("/api/admin/get-categories")
+    //   .then((response) => {
+    //       this.categories = response.data;
+    //       hideLoader();
+    //   })
+    //   .catch((err) => {
+    //     toastr.error(err);
+    //     hideLoader();
+    //   });
+    this.hideLoader();
   },
   methods: {
     async addSubCategory() {
-      showLoader();
+      this.showLoader();
       await this.axios
         .post("/api/admin/subcategory/store", this.subcategory)
         .then((response) => {

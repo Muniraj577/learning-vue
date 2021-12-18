@@ -78,16 +78,16 @@ export default {
   },
 
   async created() {
-    showLoader();
+    this.showLoader();
     await axios
       .get("/api/admin/category")
       .then((response) => {
         if (response.data.success) {
           this.categories = response.data.categories;
           this.myTable();
-          hideLoader();
+          this.hideLoader();
         } else {
-          hideLoader();
+          this.hideLoader();
         }
       })
       .catch((err) => {
@@ -101,7 +101,7 @@ export default {
       });
     },
     async deleteCategory(id) {
-      showLoader();
+      this.showLoader();
       await axios.delete(`/api/admin/category/delete/${id}`).then((res) => {
         if (res.data.success) {
           let i = this.categories.map((data) => data.id).indexOf(id);
@@ -110,7 +110,7 @@ export default {
         } else {
           toastr.error("Something Went Wrong");
         }
-        hideLoader();
+        this.hideLoader();
       });
     },
   },

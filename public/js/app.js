@@ -1961,7 +1961,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                showLoader();
+                _this.showLoader();
+
                 _context.next = 3;
                 return _this.axios.post("/api/admin/category/store", _this.category).then(function (response) {
                   if (response.data.success) {
@@ -1975,7 +1976,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this.success = false;
                   }
 
-                  hideLoader();
+                  _this.hideLoader();
                 })["catch"](function (err) {
                   toastr.error(err);
                   _this.success = false;
@@ -2110,7 +2111,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              showLoader();
+              _this.showLoader();
+
               _context.next = 3;
               return axios.get("/api/admin/category").then(function (response) {
                 if (response.data.success) {
@@ -2118,9 +2120,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                   _this.myTable();
 
-                  hideLoader();
+                  _this.hideLoader();
                 } else {
-                  hideLoader();
+                  _this.hideLoader();
                 }
               })["catch"](function (err) {
                 toastr.error(err);
@@ -2148,7 +2150,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                showLoader();
+                _this2.showLoader();
+
                 _context2.next = 3;
                 return axios["delete"]("/api/admin/category/delete/".concat(id)).then(function (res) {
                   if (res.data.success) {
@@ -2163,7 +2166,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     toastr.error("Something Went Wrong");
                   }
 
-                  hideLoader();
+                  _this2.hideLoader();
                 });
 
               case 3:
@@ -2290,11 +2293,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              showLoader();
+              _this.showLoader();
+
               _context.next = 3;
               return axios.get("/api/admin/category/edit/".concat(_this.$route.params.id)).then(function (res) {
                 _this.category = res.data;
-                hideLoader();
+
+                _this.hideLoader();
               });
 
             case 3:
@@ -2314,7 +2319,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                showLoader();
+                _this2.showLoader();
+
                 _context2.next = 3;
                 return axios.put("/api/admin/category/update/".concat(_this2.$route.params.id), _this2.category).then(function (response) {
                   if (response.data.success) {
@@ -2328,7 +2334,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this2.success = false;
                   }
 
-                  hideLoader();
+                  _this2.hideLoader();
                 })["finally"](function () {
                   return _this2.loading = false;
                 });
@@ -2613,20 +2619,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 0:
               _this.subcategory.status = "1";
               _this.subcategory.category_id = '';
-              showLoader();
-              _context.next = 5;
-              return _this.axios.get("/api/admin/get-categories").then(function (response) {
-                _this.categories = response.data;
-                hideLoader();
-              })["catch"](function (err) {
-                toastr.error(err);
-                hideLoader();
-              });
+
+              _this.showLoader();
+
+              _this.getCategories(); // await this.axios
+              //   .get("/api/admin/get-categories")
+              //   .then((response) => {
+              //       this.categories = response.data;
+              //       hideLoader();
+              //   })
+              //   .catch((err) => {
+              //     toastr.error(err);
+              //     hideLoader();
+              //   });
+
+
+              _this.hideLoader();
 
             case 5:
-              hideLoader();
-
-            case 6:
             case "end":
               return _context.stop();
           }
@@ -2643,7 +2653,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                showLoader();
+                _this2.showLoader();
+
                 _context2.next = 3;
                 return _this2.axios.post("/api/admin/subcategory/store", _this2.subcategory).then(function (response) {
                   if (response.data.success) {
@@ -2816,17 +2827,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              showLoader();
+              _this.showLoader();
+
               _context.next = 3;
               return axios.get("/api/admin/subcategory/edit/".concat(_this.$route.params.id)).then(function (res) {
                 _this.subcategory = res.data.subcategory;
-                hideLoader();
+
+                _this.getCategories();
+
+                _this.hideLoader();
               });
 
             case 3:
-              _this.getCategories();
-
-            case 4:
             case "end":
               return _context.stop();
           }
@@ -2843,7 +2855,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                showLoader();
+                _this2.showLoader();
+
                 _context2.next = 3;
                 return axios.put("/api/admin/subcategory/update/".concat(_this2.$route.params.id), _this2.subcategory).then(function (response) {
                   if (response.data.success) {
@@ -2857,7 +2870,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this2.success = false;
                   }
 
-                  hideLoader();
+                  _this2.hideLoader();
                 })["finally"](function () {
                   return _this2.loading = false;
                 });
@@ -2869,15 +2882,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2);
       }))();
-    },
-    getCategories: function getCategories() {
-      var _this3 = this;
-
-      this.axios.get('/api/admin/get-categories').then(function (response) {
-        _this3.categories = response.data;
-      })["catch"](function (err) {
-        toastr.error(err);
-      });
     }
   }
 });
@@ -2993,7 +2997,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              showLoader();
+              _this.showLoader();
+
               _context.next = 3;
               return axios.get("/api/admin/subcategory").then(function (response) {
                 if (response.data.success) {
@@ -3001,14 +3006,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                   _this.myTable();
 
-                  hideLoader();
+                  _this.hideLoader();
                 } else {
                   toastr.error('Something went wrong');
-                  hideLoader();
+
+                  _this.hideLoader();
                 }
               })["catch"](function (err) {
                 toastr.error(err);
-                hideLoader();
+
+                _this.hideLoader();
               });
 
             case 3:
@@ -3033,7 +3040,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                showLoader();
+                _this2.showLoader();
+
                 _context2.next = 3;
                 return axios["delete"]("/api/admin/subcategory/delete/".concat(id)).then(function (res) {
                   if (res.data.success) {
@@ -3048,7 +3056,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     toastr.error("Something Went Wrong");
                   }
 
-                  hideLoader();
+                  _this2.hideLoader();
                 });
 
               case 3:
@@ -3072,14 +3080,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
 /* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.es5.js");
 /* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 
  // import {categoryRoute} from './routes/category';
+
 
 
 
@@ -3092,9 +3102,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js").default;
-Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_3__.default);
-Vue.use((vue_axios__WEBPACK_IMPORTED_MODULE_1___default()), (axios__WEBPACK_IMPORTED_MODULE_2___default()));
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_3__.default({
+vue__WEBPACK_IMPORTED_MODULE_3__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_4__.default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.use((vue_axios__WEBPACK_IMPORTED_MODULE_1___default()), (axios__WEBPACK_IMPORTED_MODULE_2___default()));
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__.default({
   mode: "history",
   routes: _routes__WEBPACK_IMPORTED_MODULE_0__.routes
 });
@@ -3108,19 +3118,26 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_3__.default({
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component("example-component", __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component("example-component", __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue").default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var myMixin = {
-  created: function created() {
-    this.showLoader();
-    this.hideLoader();
-  },
+vue__WEBPACK_IMPORTED_MODULE_3__.default.mixin({
   methods: {
+    getCategories: function getCategories() {
+      var _this = this;
+
+      this.axios.get("/api/admin/get-categories").then(function (response) {
+        _this.categories = response.data;
+        hideLoader();
+      })["catch"](function (err) {
+        toastr.error(err);
+        hideLoader();
+      });
+    },
     showLoader: function showLoader() {
       $("#overlay").css("display", "block");
       $(".loading").css("display", "block");
@@ -3130,29 +3147,39 @@ var myMixin = {
       $(".loading").css("display", "none");
     }
   }
-};
-var app = new Vue({
+}); // const myMixin = {
+//     created: function() {
+//         this.showLoader();
+//         this.hideLoader();
+//     },
+//     methods: {
+//         showLoader: function() {
+//             $("#overlay").css("display", "block");
+//             $(".loading").css("display", "block");
+//         },
+//         hideLoader: function() {
+//             $("#overlay").css("display", "none");
+//             $(".loading").css("display", "none");
+//         },
+//         getCategories: function() {
+//             this.axios
+//                 .get("/api/admin/get-categories")
+//                 .then(response => {
+//                     this.categories = response.data;
+//                     hideLoader();
+//                 })
+//                 .catch(err => {
+//                     toastr.error(err);
+//                     hideLoader();
+//                 });
+//         }
+//     }
+// };
+
+var app = new vue__WEBPACK_IMPORTED_MODULE_3__.default({
   el: "#app",
-  router: router,
-  mixins: [myMixin],
-  methods: {
-    showLoader: function showLoader() {
-      $("#overlay").css("display", "block");
-      $(".loading").css("display", "block");
-    },
-    hideLoader: function hideLoader() {
-      $("#overlay").css("display", "none");
-      $(".loading").css("display", "none");
-    }
-  },
-  beforeMount: function beforeMount() {
-    this.showLoader();
-    this.hideLoader();
-  },
-  mounted: function mounted() {
-    this.showLoader();
-    this.hideLoader();
-  }
+  router: router // mixins: [myMixin],
+
 });
 router.beforeEach(function (to, from, next) {
   var defaultTitle = "Laravel";

@@ -84,19 +84,19 @@ export default {
     };
   },
   async created() {
-    showLoader();
+    this.showLoader();
     await axios
       .get(
         `/api/admin/category/edit/${this.$route.params.id}`
       )
       .then((res) => {
         this.category = res.data;
-        hideLoader();
+        this.hideLoader();
       });
   },
   methods: {
     async updateCategory() {
-      showLoader();
+      this.showLoader();
       await axios
         .put(
           `/api/admin/category/update/${this.$route.params.id}`,
@@ -110,7 +110,7 @@ export default {
             this.errors = response.data.error;
             this.success = false;
           }
-          hideLoader();
+          this.hideLoader();
         }).finally(() => (this.loading = false));
     },
   },

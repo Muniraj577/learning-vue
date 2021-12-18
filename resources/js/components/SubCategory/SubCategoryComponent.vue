@@ -80,19 +80,19 @@ export default {
   },
 
   async created() {
-    showLoader();
+    this.showLoader();
     await axios.get("/api/admin/subcategory").then((response) => {
       if (response.data.success) {
         this.subcategories = response.data.subcategories;
         this.myTable();
-        hideLoader();
+        this.hideLoader();
       } else {
           toastr.error('Something went wrong');
-          hideLoader();
+          this.hideLoader();
       }
     }).catch((err) =>{
         toastr.error(err);
-        hideLoader();
+        this.hideLoader();
     });
   },
   methods: {
@@ -102,7 +102,7 @@ export default {
       });
     },
     async deleteCategory(id) {
-      showLoader();
+      this.showLoader();
       await axios.delete(`/api/admin/subcategory/delete/${id}`).then((res) => {
         if (res.data.success) {
           let i = this.subcategories.map((data) => data.id).indexOf(id);
@@ -111,7 +111,7 @@ export default {
         } else {
           toastr.error("Something Went Wrong");
         }
-        hideLoader();
+        this.hideLoader();
       });
     },
   },

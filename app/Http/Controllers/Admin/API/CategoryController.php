@@ -27,7 +27,7 @@ class CategoryController extends Controller
     {
         // return response()->json($request->all());
         $validator = Validator::make($request->all(),[
-            'name' => ['required'],
+            'name' => ['required', 'unique:categories,name'],
         ]);
         if($validator->fails()){
             return response()->json(['error'=>$validator->errors()]);
