@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\API;
 
+use App\Contracts\CategoryInterface;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -9,9 +10,16 @@ use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
+    private $categoryRepository;
+
+    public function __construct(CategoryInterface $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
     public function index()
     {
-        $categories = Category::latest()->get();
+        $categories = $this->categoryRepository->getCategories();
+        // $categories = Category::latest()->get();
         return response()->json($categories);
     }
 
@@ -19,23 +27,22 @@ class CategoryController extends Controller
     {
         // return response()->json($request->all());
         $validator = Validator::make($request->all(),[
-            'name' => 'required',
+            'name' => ['required'],
         ]);
         if($validator->fails()){
             return response()->json(['error'=>$validator->errors()]);
         }
         if($validator->passes()){
-            $input = $request->except('_token');
-            $input['slug'] = getSlug($request->name);
-            $category = Category::create($input);
+            $category = $this->categoryRepository->store($request);
             return response()->json(['success' => true, 'message' => 'Category created successfully']);
         }
+        
         
     }
 
     public function edit($id)
     {
-        $category = Category::find($id);
+        $category = $this->categoryRepository->find($id);
         return response()->json($category);
     }
 
@@ -48,10 +55,7 @@ class CategoryController extends Controller
             return response()->json(['error' => $validator->errors()]);
         }
         if($validator->passes()){
-            $category = Category::find($id);
-            $input = $request->except('_token');
-            $input['slug'] = getSlug($request->name);
-            $category->update($input);
+            $category = $this->categoryRepository->update($request, $id);
             return response()->json(['success' => true, 'message' => 'Category updated']);
         }
         
@@ -59,7 +63,7 @@ class CategoryController extends Controller
 
     public function destroy($id)
     {
-        Category::destroy($id);
-        return response()->json('Category deleted');
+        $this->categoryRepository->delete($id);
+        return response()->json(['success'=>true, 'message' => 'Category deleted']);
     }
 }

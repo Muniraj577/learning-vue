@@ -83,20 +83,23 @@ export default {
       success: true,
     };
   },
-  created() {
-    this.axios
+  async created() {
+    showLoader();
+    await axios
       .get(
-        `http://localhost:8000/api/admin/category/edit/${this.$route.params.id}`
+        `/api/admin/category/edit/${this.$route.params.id}`
       )
       .then((res) => {
         this.category = res.data;
+        hideLoader();
       });
   },
   methods: {
-    updateCategory() {
-      this.axios
+    async updateCategory() {
+      showLoader();
+      await axios
         .put(
-          `http://localhost:8000/api/admin/category/update/${this.$route.params.id}`,
+          `/api/admin/category/update/${this.$route.params.id}`,
           this.category
         )
         .then((response) => {
@@ -107,6 +110,7 @@ export default {
             this.errors = response.data.error;
             this.success = false;
           }
+          hideLoader();
         }).finally(() => (this.loading = false));
     },
   },

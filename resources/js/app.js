@@ -1,10 +1,8 @@
-import VueRouter from 'vue-router';
-import {routes} from './routes';
+import VueRouter from "vue-router";
+import { routes } from "./routes";
 // import {categoryRoute} from './routes/category';
-import VueAxios from 'vue-axios';
-import axios from 'axios';
-
-
+import VueAxios from "vue-axios";
+import axios from "axios";
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -12,23 +10,17 @@ import axios from 'axios';
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+require("./bootstrap");
 
-
-window.Vue = require('vue').default;
+window.Vue = require("vue").default;
 
 Vue.use(VueRouter);
-Vue.use(VueAxios,axios);
-
+Vue.use(VueAxios, axios);
 
 const router = new VueRouter({
-    mode: 'history',
-    routes,
-    
+    mode: "history",
+    routes
 });
-
-
-
 
 /**
  * The following block of code may be used to automatically register your
@@ -41,7 +33,10 @@ const router = new VueRouter({
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component(
+    "example-component",
+    require("./components/ExampleComponent.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -49,7 +44,52 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+const myMixin = {
+    created: function() {
+        this.showLoader();
+        this.hideLoader();
+    },
+    methods: {
+        showLoader: function() {
+            $("#overlay").css("display", "block");
+            $(".loading").css("display", "block");
+        },
+        hideLoader: function() {
+            $("#overlay").css("display", "none");
+            $(".loading").css("display", "none");
+        }
+    }
+};
+
 const app = new Vue({
-    el: '#app',
+    el: "#app",
     router,
+    mixins: [myMixin],
+    methods: {
+        showLoader: function() {
+            $("#overlay").css("display", "block");
+            $(".loading").css("display", "block");
+        },
+        hideLoader: function() {
+            $("#overlay").css("display", "none");
+            $(".loading").css("display", "none");
+        }
+    },
+    beforeMount() {
+        this.showLoader();
+        this.hideLoader();
+    },
+    mounted: function() {
+        this.showLoader();
+        this.hideLoader();
+    }
 });
+
+router.beforeEach((to, from, next) => {
+    var defaultTitle = "Laravel";
+    document.title = to.meta.title
+        ? defaultTitle + " | " + to.meta.title
+        : defaultTitle;
+    next();
+});
+

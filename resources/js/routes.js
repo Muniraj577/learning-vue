@@ -10,11 +10,13 @@ export const routes = [
         name: 'dashboard',
         path: '/admin/dashboard',
         component: Dashboard,
+        meta: {title: 'Dashboard'},
     },
     {
         name: 'profile',
         path: '/admin/profile',
         component: Profile,
+        meta: {title: 'Profile'},
     },
     // categoryRoute
 
@@ -22,16 +24,20 @@ export const routes = [
         name: 'category',
         path: '/admin/category',
         component: Category,
+        meta: {title: 'Categories'},
     },
     {
         name: 'createCategory',
         path: '/admin/category/create',
         component: AddCategory,
+        meta: {title: 'Add Category'},
     },
     {
         name: 'editCategory',
         path: '/admin/category/edit/:id',
         component: EditCategory,
+        meta: {title: 'Edit Category'},
     },
+    
     
 ]

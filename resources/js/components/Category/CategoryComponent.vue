@@ -27,8 +27,11 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(category,i) in categories" :key="category.id">
-                        <td>{{ i+1 }}</td>
+                      <tr
+                        v-for="(category, i) in categories"
+                        :key="category.id"
+                      >
+                        <td>{{ i + 1 }}</td>
                         <td>{{ category.name }}</td>
                         <td>{{ category.status ? "Active" : "Inactive" }}</td>
                         <td>
@@ -74,27 +77,34 @@ export default {
     };
   },
 
-  created() {
-    this.axios
-      .get("http://localhost:8000/api/admin/category")
-      .then((response) => {
-        this.categories = response.data;
-        this.myTable();
-      });
+  async created() {
+      showLoader();
+      await axios.get("/api/admin/category").then((response) => {
+      this.categories = response.data;
+      this.myTable();
+      hideLoader();
+    });
   },
   methods: {
-    myTable() {
+     myTable() {
+      
       $(document).ready(function () {
         $("#Category").DataTable();
+        
       });
     },
-    deleteCategory(id) {
-      this.axios
-        .delete(`http://localhost:8000/api/admin/category/delete/${id}`)
-        .then((res) => {
+    async deleteCategory(id) {
+      showLoader();
+      await axios.delete(`/api/admin/category/delete/${id}`).then((res) => {
+        if (res.data.success) {
           let i = this.categories.map((data) => data.id).indexOf(id);
           this.categories.splice(i, 1);
-        });
+          toastr.success(res.data.message);
+        } else {
+          toastr.error('Something Went Wrong');
+        }
+        hideLoader();
+      });
     },
   },
 };

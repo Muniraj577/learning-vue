@@ -90,9 +90,10 @@ export default {
     this.category.status = "1";
   },
   methods: {
-    addCategory() {
-      this.axios
-        .post("http://localhost:8000/api/admin/category/store", this.category)
+    async addCategory() {
+      showLoader();
+      await this.axios
+        .post("/api/admin/category/store", this.category)
         .then((response) => {
           if(response.data.success){
             this.$router.push({name: "category"});
@@ -101,6 +102,7 @@ export default {
             this.errors = response.data.error;
             this.success = false;
           }
+          hideLoader();
         }).finally(() => (this.loading = false));
         // .catch((err) => {
         //   console.log(err);
