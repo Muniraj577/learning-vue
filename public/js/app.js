@@ -2979,6 +2979,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 // import 'jquery/dist/jquery.min.js';
 
  // import $ from 'jquery';
@@ -57479,6 +57481,10 @@ var render = function() {
                             _c("td", [_vm._v(_vm._s(subcategory.name))]),
                             _vm._v(" "),
                             _c("td", [
+                              _vm._v(_vm._s(subcategory.category.name))
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
                               _vm._v(
                                 "\n                        " +
                                   _vm._s(
@@ -57554,6 +57560,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("S.N")]),
         _vm._v(" "),
         _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Category")]),
         _vm._v(" "),
         _c("th", [_vm._v("Status")]),
         _vm._v(" "),

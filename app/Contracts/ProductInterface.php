@@ -2,9 +2,9 @@
 
 namespace App\Contracts;
 
-interface SubCategoryInterface{
-    public function getSubCategories();
-    public function subcatwithCategory();
+interface ProductInterface{
+    public function getProducts();
+    public function getProductWithCat();
     public function store($data);
     public function find($id);
     public function update($data, $id);

@@ -22,7 +22,7 @@ class SubCategoryController extends Controller
 
     public function index()
     {
-        $subcategories = $this->subcategoryRepository->getSubCategories();
+        $subcategories = $this->subcategoryRepository->subcatwithCategory();
         return response()->json(["success"=>true, 'subcategories'=>$subcategories]);
     }
 

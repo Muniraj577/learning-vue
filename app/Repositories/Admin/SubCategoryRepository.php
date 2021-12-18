@@ -12,6 +12,11 @@ class SubCategoryRepository implements SubCategoryInterface{
         return SubCategory::latest()->get();
     }
 
+    public function subcatwithCategory()
+    {
+        return SubCategory::with('category')->latest()->get();
+    }
+
     public function store($data)
     {
         $input = $data->except('_token');
