@@ -13,7 +13,10 @@
                 </div>
               </div>
               <div class="card-body">
-                <form @submit.prevent = "updateCategory" enctype="multipart/form-data">
+                <form
+                  @submit.prevent="updateCategory"
+                  enctype="multipart/form-data"
+                >
                   <div class="col-md-6">
                     <div class="col-md-12">
                       <div class="form-group">
@@ -30,6 +33,9 @@
                               v-model="category.name"
                               id="cat"
                             />
+                            <span class="text-danger" v-if="errors.name">
+                              {{ errors.name[0] }}
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -69,27 +75,40 @@
   </div>
 </template>
 <script>
-export default{
-    data(){
-        return {
-            category:{}
-        }
+export default {
+  data() {
+    return {
+      category: {},
+      errors: [],
+      success: true,
+    };
+  },
+  created() {
+    this.axios
+      .get(
+        `http://localhost:8000/api/admin/category/edit/${this.$route.params.id}`
+      )
+      .then((res) => {
+        this.category = res.data;
+      });
+  },
+  methods: {
+    updateCategory() {
+      this.axios
+        .put(
+          `http://localhost:8000/api/admin/category/update/${this.$route.params.id}`,
+          this.category
+        )
+        .then((response) => {
+          if (response.data.success) {
+            this.$router.push({ name: "category" });
+            toastr.success(response.data.message);
+          } else {
+            this.errors = response.data.error;
+            this.success = false;
+          }
+        }).finally(() => (this.loading = false));
     },
-    created(){
-        this.axios
-        .get(`http://localhost:8000/api/admin/category/edit/${this.$route.params.id}`)
-        .then((res)=>{
-            this.category = res.data
-        });
-    }, 
-    methods:{
-        updateCategory(){
-            this.axios
-            .put(`http://localhost:8000/api/admin/category/update/${this.$route.params.id}`,this.category)
-            .then((response) =>{
-                this.$router.push({name:'category'});
-            });
-        }
-    }
-}
+  },
+};
 </script>

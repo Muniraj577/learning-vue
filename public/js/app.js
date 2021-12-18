@@ -1918,36 +1918,56 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      category: {}
+      category: {},
+      errors: [],
+      success: true
     };
   },
   created: function created() {
-    this.category.status = '1';
+    this.category.status = "1";
   },
   methods: {
     addCategory: function addCategory() {
       var _this = this;
 
       this.axios.post("http://localhost:8000/api/admin/category/store", this.category).then(function (response) {
-        return _this.$router.push({
-          name: "category"
-        });
-      })["catch"](function (err) {
-        return console.log(err);
+        if (response.data.success) {
+          _this.$router.push({
+            name: "category"
+          });
+
+          toastr.success(response.data.message);
+        } else {
+          _this.errors = response.data.error;
+          _this.success = false;
+        }
       })["finally"](function () {
         return _this.loading = false;
-      });
+      }); // .catch((err) => {
+      //   console.log(err);
+      //   this.errors = err.response.data.error;
+      //   this.success = false;
+      // })
+      // .then((response) => this.$router.push({ name: "category" }))
+      // .finally(() => (this.loading = false));
     }
-  } // mounted: function () {
-  //   var selectedStatus = this.$refs.statusSelect.children;
-  //   if(selectedStatus.length){
-  //     this.category.status = selectedStatus[0].value;
-  //   }
-  // },
+  },
+  mounted: function mounted() {
+    var selectedStatus = this.$refs.statusSelect.children;
 
+    if (selectedStatus.length) {
+      this.category.status = selectedStatus[0].value;
+    }
+  }
 });
 
 /***/ }),
@@ -2152,10 +2172,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      category: {}
+      category: {},
+      errors: [],
+      success: true
     };
   },
   created: function created() {
@@ -2170,9 +2198,18 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.axios.put("http://localhost:8000/api/admin/category/update/".concat(this.$route.params.id), this.category).then(function (response) {
-        _this2.$router.push({
-          name: 'category'
-        });
+        if (response.data.success) {
+          _this2.$router.push({
+            name: "category"
+          });
+
+          toastr.success(response.data.message);
+        } else {
+          _this2.errors = response.data.error;
+          _this2.success = false;
+        }
+      })["finally"](function () {
+        return _this2.loading = false;
       });
     }
   }
@@ -54292,6 +54329,7 @@ var render = function() {
                                 attrs: {
                                   type: "text",
                                   name: "name",
+                                  value: "",
                                   placeholder: "Enter category name",
                                   id: "cat"
                                 },
@@ -54308,7 +54346,13 @@ var render = function() {
                                     )
                                   }
                                 }
-                              })
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.name
+                                ? _c("span", { class: ["text-danger"] }, [
+                                    _vm._v(_vm._s(_vm.errors.name[0]))
+                                  ])
+                                : _vm._e()
                             ])
                           ])
                         ]),
@@ -54356,11 +54400,9 @@ var render = function() {
                                   }
                                 },
                                 [
-                                  _c(
-                                    "option",
-                                    { attrs: { value: "1", selected: "" } },
-                                    [_vm._v("Active")]
-                                  ),
+                                  _c("option", { attrs: { value: "1" } }, [
+                                    _vm._v("Active")
+                                  ]),
                                   _vm._v(" "),
                                   _c("option", { attrs: { value: "0" } }, [
                                     _vm._v("Inactive")
@@ -54652,7 +54694,17 @@ var render = function() {
                                     )
                                   }
                                 }
-                              })
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.name
+                                ? _c("span", { staticClass: "text-danger" }, [
+                                    _vm._v(
+                                      "\n                            " +
+                                        _vm._s(_vm.errors.name[0]) +
+                                        "\n                          "
+                                    )
+                                  ])
+                                : _vm._e()
                             ])
                           ])
                         ]),

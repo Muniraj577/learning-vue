@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\API;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -17,10 +18,19 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         // return response()->json($request->all());
-        $input = $request->except('_token');
-        $input['slug'] = getSlug($request->name);
-        $category = Category::create($input);
-        return response()->json($category);
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+        ]);
+        if($validator->fails()){
+            return response()->json(['error'=>$validator->errors()]);
+        }
+        if($validator->passes()){
+            $input = $request->except('_token');
+            $input['slug'] = getSlug($request->name);
+            $category = Category::create($input);
+            return response()->json(['success' => true, 'message' => 'Category created successfully']);
+        }
+        
     }
 
     public function edit($id)
@@ -31,11 +41,20 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
-        $category = Category::find($id);
-        $input = $request->except('_token');
-        $input['slug'] = getSlug($request->name);
-        $category->update($input);
-        return response()->json('Category updated');
+        $validator = Validator::make($request->all(),[
+            "name" => ["required", "unique:categories,name,".$id],
+        ]);
+        if($validator->fails()){
+            return response()->json(['error' => $validator->errors()]);
+        }
+        if($validator->passes()){
+            $category = Category::find($id);
+            $input = $request->except('_token');
+            $input['slug'] = getSlug($request->name);
+            $category->update($input);
+            return response()->json(['success' => true, 'message' => 'Category updated']);
+        }
+        
     }
 
     public function destroy($id)

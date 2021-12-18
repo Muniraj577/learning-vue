@@ -30,9 +30,15 @@
                               name="name"
                               class="form-control"
                               v-model="category.name"
+                              value=""
                               placeholder="Enter category name"
                               id="cat"
                             />
+                            <span
+                              v-if="errors.name"
+                              :class="['text-danger']"
+                              >{{ errors.name[0] }}</span
+                            >
                           </div>
                         </div>
                       </div>
@@ -49,7 +55,7 @@
                               class="form-control"
                               id="status"
                             >
-                              <option value="1" selected>Active</option>
+                              <option value="1">Active</option>
                               <option value="0">Inactive</option>
                             </select>
                           </div>
@@ -74,30 +80,42 @@
 <script>
 export default {
   data() {
-    
     return {
       category: {},
-      
+      errors: [],
+      success: true,
     };
-    
   },
-  created(){
-    this.category.status = '1'
+  created() {
+    this.category.status = "1";
   },
   methods: {
     addCategory() {
       this.axios
         .post("http://localhost:8000/api/admin/category/store", this.category)
-        .then((response) => this.$router.push({ name: "category" }))
-        .catch((err) => console.log(err))
-        .finally(() => (this.loading = false));
+        .then((response) => {
+          if(response.data.success){
+            this.$router.push({name: "category"});
+            toastr.success(response.data.message);
+          } else {
+            this.errors = response.data.error;
+            this.success = false;
+          }
+        }).finally(() => (this.loading = false));
+        // .catch((err) => {
+        //   console.log(err);
+        //   this.errors = err.response.data.error;
+        //   this.success = false;
+        // })
+// .then((response) => this.$router.push({ name: "category" }))
+        // .finally(() => (this.loading = false));
     },
   },
-  // mounted: function () {
-  //   var selectedStatus = this.$refs.statusSelect.children;
-  //   if(selectedStatus.length){
-  //     this.category.status = selectedStatus[0].value;
-  //   }
-  // },
+  mounted: function () {
+    var selectedStatus = this.$refs.statusSelect.children;
+    if(selectedStatus.length){
+      this.category.status = selectedStatus[0].value;
+    }
+  },
 };
 </script>
