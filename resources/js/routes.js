@@ -8,6 +8,7 @@ import AddSubCategory from './components/SubCategory/AddSubCategoryComponent.vue
 import EditSubCategory from './components/SubCategory/EditSubCategoryComponent.vue';
 // import {categoryRoute} from './routes/category.js';
 import subcategory from './routes/subcategory.js';
+import product from './routes/product';
 
 export const routes = [
     {
@@ -43,6 +44,7 @@ export const routes = [
         meta: {title: 'Edit Category'},
     },
     ...subcategory,
+    ...product,
     
     
 ]

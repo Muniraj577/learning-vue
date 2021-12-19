@@ -32,16 +32,23 @@ class ProductRepository implements ProductInterface
 
     public function find($id)
     {
-
+        return Product::findOrFail($id);
     }
 
     public function update($data, $id)
     {
-
+        $product = $this->find($id);
+        $input = $data->except("_token");
+        $oldImage = $product->image;
+        $input['slug'] = getSlug($data->title);
+        if($data->hasFile('image')){
+            $input["image"] = Upload::image($data, "image", $this->destination, $oldImage);
+        }
+        return $product->update($input);
     }
 
     public function delete($id)
     {
-
+        return Product::find($id)->delete();
     }
 }

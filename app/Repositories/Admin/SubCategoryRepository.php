@@ -44,4 +44,10 @@ class SubCategoryRepository implements SubCategoryInterface{
     }
 
 
+    public function filterSubCatByCategory($data)
+    {
+        return SubCategory::where("category_id", $data->category_id)->get();
+    }
+
+
 }

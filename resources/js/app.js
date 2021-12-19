@@ -58,6 +58,28 @@ Vue.mixin({
                     hideLoader();
                 });
         },
+
+        getSubCategories: function(id) {
+            this.showLoader();
+            axios
+                .post("/api/admin/filter/subcatbycategory", {
+                    category_id: id,
+                })
+                .then(response => {
+                    if (response.data.success) {
+                        this.subcategories = response.data.subcategories;
+                        this.hideLoader();
+                    } else {
+                        toastr.error("Something went wrong");
+                        this.hideLoader();
+                    }
+                })
+                .catch(err => {
+                    toastr.error(err);
+                    this.hideLoader();
+                })
+                .finally(() => (this.loading = false));
+        },
         showLoader: function() {
             $("#overlay").css("display", "block");
             $(".loading").css("display", "block");
@@ -65,7 +87,7 @@ Vue.mixin({
         hideLoader: function() {
             $("#overlay").css("display", "none");
             $(".loading").css("display", "none");
-        },
+        }
     }
 });
 // const myMixin = {
@@ -99,7 +121,7 @@ Vue.mixin({
 
 const app = new Vue({
     el: "#app",
-    router,
+    router
     // mixins: [myMixin],
 });
 

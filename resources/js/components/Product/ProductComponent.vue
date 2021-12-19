@@ -8,49 +8,53 @@
               <div class="card-header">
                 <div class="card-title float-right">
                   <router-link
-                    :to="{ name: 'createSubCategory' }"
+                    :to="{ name: 'createProduct' }"
                     class="btn btn-primary"
                   >
-                    <i class="fas fa-plus"></i> Add SubCategory
+                    <i class="fas fa-plus"></i> Add Product
                   </router-link>
                 </div>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table id="SubCategory" class="table text-center">
+                  <table id="Product" class="table text-center">
                     <thead>
                       <tr>
                         <th>S.N</th>
-                        <th>Name</th>
+                        <th>Image</th>
+                        <th>Title</th>
                         <th>Category</th>
+                        <th>Subcategory</th>
                         <th>Status</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr
-                        v-for="(subcategory, i) in subcategories"
-                        :key="subcategory.id"
+                        v-for="(product, i) in products"
+                        :key="product.id"
                       >
                         <td>{{ i + 1 }}</td>
-                        <td>{{ subcategory.name }}</td>
-                        <td>{{ subcategory.category.name }}</td>
+                        <td>Image</td>
+                        <td>{{ product.title }}</td>
+                        <td>{{ product.category.name }}</td>
+                        <td>{{ product.subcategory.name ? product.subcategory.name : 'No subcategory' }}</td>
                         <td>
-                          {{ subcategory.status ? "Active" : "Inactive" }}
+                          {{ product.status ? "Active" : "Inactive" }}
                         </td>
                         <td>
                           <div class="inline-flex">
                             <router-link
                               :to="{
-                                name: 'editSubCategory',
-                                params: { id: subcategory.id },
+                                name: 'editProduct',
+                                params: { id: product.id },
                               }"
                               class="btn btn-primary"
                               >Edit</router-link
                             >
                             <button
                               class="btn btn-danger"
-                              @click="deleteCategory(subcategory.id)"
+                              @click="deleteProduct(product.id)"
                             >
                               Delete
                             </button>
@@ -77,15 +81,15 @@ import "datatables.net-dt/css/jquery.dataTables.min.css";
 export default {
   data() {
     return {
-      subcategories: [],
+      products: [],
     };
   },
 
   async created() {
     this.showLoader();
-    await axios.get("/api/admin/subcategory").then((response) => {
+    await axios.get("/api/admin/product").then((response) => {
       if (response.data.success) {
-        this.subcategories = response.data.subcategories;
+        this.products = response.data.products;
         this.myTable();
         this.hideLoader();
       } else {
@@ -100,20 +104,22 @@ export default {
   methods: {
     myTable() {
       $(document).ready(function () {
-        $("#SubCategory").DataTable();
+        $("#Product").DataTable();
       });
     },
-    async deleteCategory(id) {
+    async deleteProduct(id) {
       this.showLoader();
-      await axios.delete(`/api/admin/subcategory/delete/${id}`).then((res) => {
+      await axios.delete(`/api/admin/product/delete/${id}`).then((res) => {
         if (res.data.success) {
-          let i = this.subcategories.map((data) => data.id).indexOf(id);
-          this.subcategories.splice(i, 1);
+          let i = this.products.map((data) => data.id).indexOf(id);
+          this.products.splice(i, 1);
           toastr.success(res.data.message);
         } else {
           toastr.error("Something Went Wrong");
         }
         this.hideLoader();
+      }).catch((err) => {
+          toastr.error(err);
       });
     },
   },

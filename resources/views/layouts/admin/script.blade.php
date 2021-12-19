@@ -2,7 +2,6 @@
 <script src="{{ asset('admin/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 <script>
     $.widget.bridge('uibutton', $.ui.button)
-
 </script>
 <script src="{{ asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('admin/plugins/chart.js/Chart.min.js') }}"></script>
@@ -32,10 +31,10 @@
 <script src="{{ asset('js/toastr.min.js') }}"></script>
 <script src="{{ asset('js/nepali.datepicker.min.js') }}"></script>
 <script src="{{ asset('js/jquery-confirm.min.js') }}"></script>
-<script src="{{mix('js/app.js')}}"></script>
+<script src="{{ mix('js/app.js') }}"></script>
 <script>
     $(function() {
-        
+
         var mainInput = document.getElementsByClassName("nepaliDatePicker");
         mainInput.nepaliDatePicker({
             language: "english",
@@ -53,7 +52,7 @@
             ndpMonth: true,
             ndpYearCount: 200
         });
-        
+
     });
     $.ajaxSetup({
         headers: {
@@ -61,8 +60,20 @@
         }
     });
 
-    
-    
+    function showImg(img, previewId) {
+        readInputURL(img, previewId);
+    }
+
+    function readInputURL(input, idName) {
+        if (input.files && input.files[0]) {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                $("#" + idName).attr('src', e.target.result).width(100).height(100);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
 
     $(document).ready(function() {
         function readURL(input) {
@@ -103,7 +114,7 @@
     }
 
     function onlynumbers(event) {
-        
+
         let key = window.event ? event.keyCode : event.which;
         if (event.keyCode == 8 || event.keyCode == 46 ||
             event.keyCode == 37 || event.keyCode == 39) {
@@ -112,29 +123,26 @@
             return false;
         } else return true;
     }
-//     $('.qty').bind('keyup paste', function(){
-//         this.value = this.value.replace(/[^0-9]/g, '');
-//   });
-    function numberonly(thes)
-    {
+    //     $('.qty').bind('keyup paste', function(){
+    //         this.value = this.value.replace(/[^0-9]/g, '');
+    //   });
+    function numberonly(thes) {
         console.log(thes.val());
-        if (/\D/g.test(thes.val()))
-        {
-        // Filter non-digits from input value.
-        thes.value=thes.value.replace(/\D/g, '');
-        }                       
-       
+        if (/\D/g.test(thes.val())) {
+            // Filter non-digits from input value.
+            thes.value = thes.value.replace(/\D/g, '');
+        }
+
 
     }
 
-    $('input.qty').on('paste',function(event){
+    $('input.qty').on('paste', function(event) {
         if (event.originalEvent.clipboardData.getData('Text').match(/[^\d]/)) {
             event.preventDefault();
         }
     })
 
-    function onpasteString(event)
-    {
+    function onpasteString(event) {
         if (event.clipboardData.getData('Text').match(/[^\d]/)) {
             event.preventDefault();
         }
@@ -142,9 +150,8 @@
 
 
 
-    function alertMessage()
-    {
-        
+    function alertMessage() {
+
         $.alert({
             title: 'Alert!',
             icon: 'fa fa-warning',
@@ -153,8 +160,8 @@
             backgroundDismiss: true,
         });
     }
-    function alertPayMessage()
-    {
+
+    function alertPayMessage() {
         $.alert({
             title: 'Alert!',
             icon: 'fa fa-warning',
@@ -165,19 +172,15 @@
     }
 
 
-    function showLoader()
-    {
+    function showLoader() {
         $("#overlay").css('display', 'block');
         $(".loading").css('display', 'block');
     }
 
-    function hideLoader()
-    {
+    function hideLoader() {
         $("#overlay").css('display', 'none');
         $(".loading").css('display', 'none');
     }
-    
-
 </script>
 <script>
     toastr.options = {
@@ -197,25 +200,25 @@
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     };
-    @if(Session::has('message'))
-    var type = "{{ Session::get('alert-type', 'info') }}";
-    switch (type) {
+    @if (Session::has('message'))
+        var type = "{{ Session::get('alert-type', 'info') }}";
+        switch (type) {
         case 'info':
-            toastr.info("{{ Session::get('message') }}");
-            break;
-
+        toastr.info("{{ Session::get('message') }}");
+        break;
+    
         case 'warning':
-            toastr.warning("{{ Session::get('message') }}");
-            break;
-
+        toastr.warning("{{ Session::get('message') }}");
+        break;
+    
         case 'success':
-            toastr.success("{{ Session::get('message') }}");
-            break;
-
+        toastr.success("{{ Session::get('message') }}");
+        break;
+    
         case 'error':
-            toastr.error("{{ Session::get('message') }}");
-            break;
-    }
+        toastr.error("{{ Session::get('message') }}");
+        break;
+        }
     @endif
 </script>
 @yield('scripts')
