@@ -150,8 +150,9 @@
                               class="form-control"
                               name="image"
                               id=""
+                              onchange="showImg(this,'imgPreview')"
                             />
-                            <!-- <img src="" alt="" id="imgPreview" /> -->
+                            <img src="" alt="" id="imgPreview" />
                             <span class="text-danger" v-if="errors.image">{{
                               errors.image[0]
                             }}</span>
@@ -190,6 +191,8 @@ export default {
     this.product.status = "1";
     this.product.category_id = "";
     this.product.subcategory_id = "";
+    this.product.title = "";
+    this.product.price = "";
     this.showLoader();
     this.getCategories();
     this.hideLoader();

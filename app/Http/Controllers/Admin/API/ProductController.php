@@ -25,17 +25,19 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        // return response()->json($request->file('image'));
+        // return response()->json($request->all());
         // die();
         $validator = Validator::make($request->all(),[
-            "category_id" => ["required"],
+            "category_id"=> ["required"],
             "title" => ["required", "unique:products,title"],
             "image" => ["nullable", "mimes:jpg,png,jpeg", "max:2048"],
             "price" => ["required", "numeric"],
+        ],[
+            "category_id.required" => "The category field is required",
         ]);
 
         if($validator->fails()){
-            return response()->json(["errors" => $validator->errors()]);
+            return response()->json(['errors' => $validator->errors()]);
         }
 
         if($validator->passes()){

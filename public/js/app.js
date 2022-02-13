@@ -2628,6 +2628,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2650,6 +2651,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _this.product.status = "1";
               _this.product.category_id = "";
               _this.product.subcategory_id = "";
+              _this.product.title = "";
+              _this.product.price = "";
 
               _this.showLoader();
 
@@ -2657,7 +2660,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               _this.hideLoader();
 
-            case 6:
+            case 8:
             case "end":
               return _context.stop();
           }
@@ -58108,8 +58111,17 @@ var render = function() {
                             _c("div", { staticClass: "col-md-8" }, [
                               _c("input", {
                                 staticClass: "form-control",
-                                attrs: { type: "file", name: "image", id: "" },
+                                attrs: {
+                                  type: "file",
+                                  name: "image",
+                                  id: "",
+                                  onchange: "showImg(this,'imgPreview')"
+                                },
                                 on: { change: _vm.onFileChange }
+                              }),
+                              _vm._v(" "),
+                              _c("img", {
+                                attrs: { src: "", alt: "", id: "imgPreview" }
                               }),
                               _vm._v(" "),
                               _vm.errors.image
