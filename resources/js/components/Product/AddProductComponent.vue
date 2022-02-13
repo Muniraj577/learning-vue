@@ -14,6 +14,7 @@
               </div>
               <div class="card-body">
                 <form
+                  method="POST"
                   @submit.prevent="addProduct"
                   enctype="multipart/form-data"
                 >
@@ -79,7 +80,7 @@
                           </div>
                           <div class="col-md-8">
                             <select
-                            ref="subcategorySelect"
+                              ref="subcategorySelect"
                               name="subcategory_id"
                               v-model="product.subcategory_id"
                               class="form-control"
@@ -144,14 +145,13 @@
                           </div>
                           <div class="col-md-8">
                             <input
-                              v-on:change="onFileChange;"
+                              v-on:change="onFileChange"
                               type="file"
                               class="form-control"
                               name="image"
-                              id="img"
-                              onchange="showImg(this, 'imgPreview')"
+                              id=""
                             />
-                            <img src="" alt="" id="imgPreview" />
+                            <!-- <img src="" alt="" id="imgPreview" /> -->
                             <span class="text-danger" v-if="errors.image">{{
                               errors.image[0]
                             }}</span>
@@ -181,6 +181,7 @@ export default {
       categories: [],
       subcategories: [],
       product: {},
+      image: "",
       errors: [],
       success: true,
     };
@@ -196,22 +197,23 @@ export default {
   methods: {
     async addProduct() {
       this.showLoader();
-      this.product = new FormData();
-      this.product.append('image', this.product.image);
-    //   console.log(data);
-    //   return true;
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      };
+      let data = new FormData();
+      data.append("image", this.image);
+      data.append("title", this.product.title);
+      data.append("category_id", this.product.category_id);
+      data.append("price", this.product.price);
+      data.append("subcategory_id", this.product.subcategory_id);
+      data.append("status", this.product.status);
       await this.axios
-        .post("/api/admin/product/store", this.product, {
-            headers:{
-                'content-type': 'multipart/form-data'
-            }
-        })
+        .post("/api/admin/product/store", data, config)
         .then((response) => {
-            console.log(response);
           if (response.data.success) {
-              console.log(response);
-              this.hideLoader();
-              return true;
+            this.hideLoader();
             this.$router.push({ name: "product" });
             toastr.success(response.data.message);
           } else {
@@ -227,17 +229,16 @@ export default {
         .finally(() => (this.loading = false));
     },
 
-    onFileChange(e){
-        this.product.image = e.target.files[0];
-        
+    onFileChange(e) {
+      this.image = e.target.files[0];
     },
   },
   mounted: function () {
     var selectedStatus = this.$refs.statusSelect.children;
     var selectedSubCategories = this.$refs.subcategorySelect.children;
 
-    if(selectedSubCategories.length){
-        this.product.subcategory_id = selectedSubCategories[0].value;
+    if (selectedSubCategories.length) {
+      this.product.subcategory_id = selectedSubCategories[0].value;
     }
     if (selectedStatus.length) {
       this.product.status = selectedStatus[0].value;

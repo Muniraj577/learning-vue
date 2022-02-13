@@ -2634,6 +2634,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       categories: [],
       subcategories: [],
       product: {},
+      image: "",
       errors: [],
       success: true
     };
@@ -2669,32 +2670,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var config, data;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _this2.showLoader();
 
-                _this2.product = new FormData();
-
-                _this2.product.append('image', _this2.product.image); //   console.log(data);
-                //   return true;
-
-
-                _context2.next = 5;
-                return _this2.axios.post("/api/admin/product/store", _this2.product, {
+                config = {
                   headers: {
-                    'content-type': 'multipart/form-data'
+                    "content-type": "multipart/form-data"
                   }
-                }).then(function (response) {
-                  console.log(response);
-
+                };
+                data = new FormData();
+                data.append("image", _this2.image);
+                data.append("title", _this2.product.title);
+                data.append("category_id", _this2.product.category_id);
+                data.append("price", _this2.product.price);
+                data.append("subcategory_id", _this2.product.subcategory_id);
+                data.append("status", _this2.product.status);
+                _context2.next = 11;
+                return _this2.axios.post("/api/admin/product/store", data, config).then(function (response) {
                   if (response.data.success) {
-                    console.log(response);
-
                     _this2.hideLoader();
-
-                    return true;
 
                     _this2.$router.push({
                       name: "product"
@@ -2714,7 +2712,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return _this2.loading = false;
                 });
 
-              case 5:
+              case 11:
               case "end":
                 return _context2.stop();
             }
@@ -2723,7 +2721,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     onFileChange: function onFileChange(e) {
-      this.product.image = e.target.files[0];
+      this.image = e.target.files[0];
     }
   },
   mounted: function mounted() {
@@ -2956,6 +2954,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -57781,7 +57780,7 @@ var render = function() {
                 _c(
                   "form",
                   {
-                    attrs: { enctype: "multipart/form-data" },
+                    attrs: { method: "POST", enctype: "multipart/form-data" },
                     on: {
                       submit: function($event) {
                         $event.preventDefault()
@@ -58109,21 +58108,8 @@ var render = function() {
                             _c("div", { staticClass: "col-md-8" }, [
                               _c("input", {
                                 staticClass: "form-control",
-                                attrs: {
-                                  type: "file",
-                                  name: "image",
-                                  id: "img",
-                                  onchange: "showImg(this, 'imgPreview')"
-                                },
-                                on: {
-                                  change: function($event) {
-                                    _vm.onFileChange
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("img", {
-                                attrs: { src: "", alt: "", id: "imgPreview" }
+                                attrs: { type: "file", name: "image", id: "" },
+                                on: { change: _vm.onFileChange }
                               }),
                               _vm._v(" "),
                               _vm.errors.image
@@ -58578,7 +58564,19 @@ var render = function() {
                           return _c("tr", { key: product.id }, [
                             _c("td", [_vm._v(_vm._s(i + 1))]),
                             _vm._v(" "),
-                            _c("td", [_vm._v("Image")]),
+                            _c("td", [
+                              _c("img", {
+                                staticClass: "imgSize",
+                                attrs: {
+                                  src:
+                                    product.image != null &&
+                                    product.image != "default.png"
+                                      ? "/images/products/" + product.image
+                                      : "/images/default.png",
+                                  alt: ""
+                                }
+                              })
+                            ]),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(product.title))]),
                             _vm._v(" "),

@@ -35,7 +35,8 @@
                         :key="product.id"
                       >
                         <td>{{ i + 1 }}</td>
-                        <td>Image</td>
+                        
+                        <td><img :src="(product.image != null && product.image != 'default.png') ? '/images/products/'+product.image : '/images/default.png'" alt="" class="imgSize"></td>
                         <td>{{ product.title }}</td>
                         <td>{{ product.category.name }}</td>
                         <td>{{ product.subcategory.name ? product.subcategory.name : 'No subcategory' }}</td>
