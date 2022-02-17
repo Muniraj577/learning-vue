@@ -4,6 +4,8 @@ import { routes } from "./routes";
 import VueAxios from "vue-axios";
 import axios from "axios";
 import Vue from "vue";
+import "datatables.net-dt/js/dataTables.dataTables";
+import "datatables.net-dt/css/jquery.dataTables.min.css";
 
 /**
  * First we will load all of this project's JavaScript dependencies which
